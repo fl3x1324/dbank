@@ -11,11 +11,12 @@ import "./App.css";
 
 class App extends Component {
   async componentDidMount() {
-    await this.loadBlockchainData(this.props.dispatch);
+    await this.loadBlockchainData();
   }
 
-  async loadBlockchainData(dispatch) {
+  async loadBlockchainData() {
     if (window.ethereum) {
+      await window.ethereum.send("eth_requestAccounts");
       const web3 = new Web3(window.ethereum);
       this.setState({ web3 });
       const netId = await web3.eth.net.getId();
@@ -92,7 +93,7 @@ class App extends Component {
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="http://www.dappuniversity.com/bootcamp"
+            href="https://www.dappuniversity.com/bootcamp"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -101,10 +102,10 @@ class App extends Component {
           </a>
         </nav>
         <div className="container-fluid mt-5 text-center">
-          <br></br>
+          <br/>
           <h1>{/*add welcome msg*/}</h1>
           <h2>{/*add user address*/}</h2>
-          <br></br>
+          <br/>
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
@@ -124,7 +125,7 @@ class App extends Component {
                           let amountWei = this.state.web3.utils.toWei(
                             this.depositAmount.value
                           );
-                          this.deposit(amountWei);
+                          this.deposit(amountWei).then();
                         }}
                       >
                         <div className="form-group mr-sm-2">
@@ -146,10 +147,10 @@ class App extends Component {
                     </div>
                   </Tab>
                   <Tab className="tabb" eventKey="withdraw" title="Withdraw">
-                    <br></br>
+                    <br/>
                     Do you want to withdraw + take interest?
-                    <br></br>
-                    <br></br>
+                    <br/>
+                    <br/>
                     <div>
                       <button
                         type="submit"
